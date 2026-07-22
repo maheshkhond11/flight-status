@@ -1,0 +1,7 @@
+{
+  "/flights": {
+    "target": "http://localhost:5094",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

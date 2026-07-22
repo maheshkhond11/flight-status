@@ -1,0 +1,13 @@
+.result-card { background: #fff; border: 1px solid #e2e8f0; border-left: .45rem solid #64748b; border-radius: .75rem; box-shadow: 0 8px 24px rgb(15 23 42 / 8%); padding: 1.5rem; }
+header { align-items: start; display: flex; justify-content: space-between; gap: 1rem; }
+.eyebrow { color: #64748b; font-size: .875rem; font-weight: 700; margin: 0 0 .3rem; }
+h2 { color: #0f172a; margin: 0; }
+h3 { font-size: 1rem; margin: 1.3rem 0 .45rem; }
+p { color: #334155; margin: .3rem 0; }
+.status-badge { background: #e2e8f0; border-radius: 999px; color: #334155; font-size: .875rem; font-weight: 800; padding: .35rem .65rem; }
+.message { font-weight: 600; }
+footer { border-top: 1px solid #e2e8f0; color: #64748b; font-size: .8rem; margin-top: 1.25rem; padding-top: .8rem; }
+.status--ontime { border-left-color: #15803d; } .status--ontime .status-badge { background: #dcfce7; color: #166534; }
+.status--delayed { border-left-color: #d97706; } .status--delayed .status-badge { background: #fef3c7; color: #92400e; }
+.status--cancelled, .status--diverted { border-left-color: #dc2626; } .status--cancelled .status-badge, .status--diverted .status-badge { background: #fee2e2; color: #991b1b; }
+.status--unknown { border-left-color: #64748b; }

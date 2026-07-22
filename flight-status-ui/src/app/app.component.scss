@@ -1,0 +1,8 @@
+.page-shell { margin: 0 auto; max-width: 860px; padding: 3rem 1.25rem; }
+.hero { margin-bottom: 2rem; }
+.brand { color: #2563eb; font-size: .8rem; font-weight: 800; letter-spacing: .12em; margin: 0; }
+h1 { color: #0f172a; font-size: clamp(2rem, 5vw, 3rem); margin: .45rem 0; }
+.hero > p:last-child { color: #475569; font-size: 1.1rem; margin: 0; }
+.panel { background: #fff; border: 1px solid #e2e8f0; border-radius: .75rem; box-shadow: 0 8px 24px rgb(15 23 42 / 6%); margin-bottom: 1.5rem; padding: 1.25rem; }
+.empty-state { color: #64748b; text-align: center; }
+.error { background: #fef2f2; border: 1px solid #fecaca; border-radius: .5rem; color: #991b1b; padding: 1rem; }

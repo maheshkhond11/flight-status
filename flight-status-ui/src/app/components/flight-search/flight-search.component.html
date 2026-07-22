@@ -1,1 +1,21 @@
-<p>flight-search works!</p>
+<form class="search-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div class="field">
+    <label for="flight-number">Flight number</label>
+    <input id="flight-number" type="text" formControlName="flightNumber" placeholder="e.g. SR100" autocomplete="off" />
+    @if (form.controls.flightNumber.touched && form.controls.flightNumber.invalid) {
+      <small>Enter a flight number.</small>
+    }
+  </div>
+
+  <div class="field">
+    <label for="flight-date">Flight date</label>
+    <input id="flight-date" type="date" formControlName="date" />
+    @if (form.controls.date.touched && form.controls.date.invalid) {
+      <small>Select a flight date.</small>
+    }
+  </div>
+
+  <button type="submit" [disabled]="loading()">
+    {{ loading() ? 'Searching...' : 'Check status' }}
+  </button>
+</form>

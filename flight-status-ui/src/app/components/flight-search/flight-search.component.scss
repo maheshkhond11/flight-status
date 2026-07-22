@@ -1,0 +1,9 @@
+.search-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; }
+.field { display: grid; gap: .35rem; }
+label { color: #334155; font-size: .875rem; font-weight: 700; }
+input { border: 1px solid #cbd5e1; border-radius: .5rem; font: inherit; padding: .7rem .8rem; }
+input:focus { border-color: #2563eb; outline: 3px solid #bfdbfe; }
+button { background: #1d4ed8; border: 0; border-radius: .5rem; color: #fff; cursor: pointer; font: inherit; font-weight: 700; padding: .75rem 1.1rem; }
+button:disabled { cursor: wait; opacity: .7; }
+small { color: #b91c1c; }
+@media (max-width: 640px) { .search-form { grid-template-columns: 1fr; } }

@@ -1,1 +1,33 @@
-<p>flight-result-card works!</p>
+<article class="result-card" [class]="statusClass" aria-live="polite">
+  <header>
+    <div>
+      <p class="eyebrow">Flight {{ result()?.flightNumber }}</p>
+      <h2>{{ result()?.status }}</h2>
+    </div>
+    <span class="status-badge">{{ result()?.status }}</span>
+  </header>
+
+  @if (result()?.message) {
+    <p class="message">{{ result()?.message }}</p>
+  }
+
+  @if (result()?.scheduledDepartureUtc || result()?.actualDepartureUtc) {
+    <section>
+      <h3>Departure</h3>
+      @if (result()?.scheduledDepartureUtc) { <p>Scheduled: {{ result()?.scheduledDepartureUtc | date:'medium':'UTC' }}</p> }
+      @if (result()?.actualDepartureUtc) { <p>Actual: {{ result()?.actualDepartureUtc | date:'medium':'UTC' }}</p> }
+    </section>
+  }
+
+  @if (result()?.terminal || result()?.gate || result()?.delayReason) {
+    <section class="details">
+      @if (result()?.terminal) { <p><strong>Terminal:</strong> {{ result()?.terminal }}</p> }
+      @if (result()?.gate) { <p><strong>Gate:</strong> {{ result()?.gate }}</p> }
+      @if (result()?.delayReason) { <p><strong>Delay reason:</strong> {{ result()?.delayReason }}</p> }
+    </section>
+  }
+
+  @if (result()?.lastUpdatedUtc) {
+    <footer>Last updated: {{ result()?.lastUpdatedUtc | date:'medium':'UTC' }}</footer>
+  }
+</article>
