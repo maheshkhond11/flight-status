@@ -8,14 +8,32 @@ namespace FlightStatus.Api.Services;
 
 public sealed class FlightStatusService
 {
-    // Returned when every provider fails or returns an unusable response.
-    private const string UnknownStatusMessage =
-        "No usable status was returned by either provider.";
+    /// <summary>
+    /// A message to include in the flight status result when no provider returned a usable status.
+    /// </summary>
+    private const string UnknownStatusMessage = "No usable status was returned by either provider.";
 
+    /// <summary>
+    /// Gets the collection of flight status providers that can be queried for flight status information.
+    /// </summary>
     private readonly IReadOnlyCollection<IFlightStatusProvider> _providers;
+
+    /// <summary>
+    /// Gets the normalizer for converting provider-specific flight status information into a consistent format.
+    /// </summary>
     private readonly FlightStatusNormalizer _normalizer;
+
+    /// <summary>
+    /// Gets the logger for the flight status service.
+    /// </summary>
     private readonly ILogger<FlightStatusService> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FlightStatusService"/> class with the specified providers, normalizer, and logger.
+    /// </summary>
+    /// <param name="providers"></param>
+    /// <param name="normalizer"></param>
+    /// <param name="logger"></param>
     public FlightStatusService(
         IEnumerable<IFlightStatusProvider> providers,
         FlightStatusNormalizer normalizer,
@@ -27,6 +45,13 @@ public sealed class FlightStatusService
         _logger = logger;
     }
 
+    /// <summary>
+    /// Gets the flight status for a given flight number and date, using multiple providers to find the most recent and usable result.
+    /// </summary>
+    /// <param name="flightNumber"></param>
+    /// <param name="date"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<FlightStatusResult> GetStatusAsync(
         string flightNumber,
         DateOnly date,
@@ -54,6 +79,14 @@ public sealed class FlightStatusService
         return winner ?? CreateUnknownResult(flightNumber, date);
     }
 
+    /// <summary>
+    /// Attempts to get a usable flight status from a single provider.
+    /// </summary>
+    /// <param name="provider"></param>
+    /// <param name="flightNumber"></param>
+    /// <param name="date"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     private async Task<ProviderCandidate?> GetUsableResponseAsync(
         IFlightStatusProvider provider,
         string flightNumber,
@@ -91,6 +124,12 @@ public sealed class FlightStatusService
         }
     }
 
+    /// <summary>
+    /// Creates a fallback result when no provider returned a usable status.
+    /// </summary>
+    /// <param name="flightNumber"></param>
+    /// <param name="date"></param>
+    /// <returns></returns>
     private static FlightStatusResult CreateUnknownResult(
         string flightNumber,
         DateOnly date) =>
@@ -109,6 +148,10 @@ public sealed class FlightStatusService
             LastUpdatedUtc: null,
             Message: UnknownStatusMessage);
 
-    // Keeps a normalized result together with the name of its source provider.
+    /// <summary>
+    /// Represents a candidate response from a provider that returned a usable flight status.
+    /// </summary>
+    /// <param name="ProviderName"></param>
+    /// <param name="Result"></param>
     private sealed record ProviderCandidate(string ProviderName, FlightStatusResult Result);
 }

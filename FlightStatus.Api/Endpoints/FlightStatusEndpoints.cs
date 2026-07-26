@@ -5,6 +5,11 @@ namespace FlightStatus.Api.Endpoints;
 
 public static class FlightStatusEndpoints
 {
+    /// <summary>
+    /// Maps the flight status endpoints to the specified <see cref="IEndpointRouteBuilder"/>.
+    /// </summary>
+    /// <param name="endpoints"></param>
+    /// <returns></returns>
     public static IEndpointRouteBuilder MapFlightStatusEndpoints(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/flights/status", async (
