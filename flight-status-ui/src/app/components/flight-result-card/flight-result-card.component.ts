@@ -9,7 +9,7 @@ import { FlightStatusResult } from '../../models/flight-status-result.model';
   styleUrl: './flight-result-card.component.scss',
 })
 export class FlightResultCardComponent {
-  readonly result = input<FlightStatusResult>();
+  readonly result = input<FlightStatusResult | null>(null);
 
   get statusClass(): string {
     const status = this.result()?.status ?? 'unknown';

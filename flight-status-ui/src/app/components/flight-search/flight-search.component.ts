@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FlightLookup } from '../../models/flight-status-result.model';
 
@@ -9,7 +9,7 @@ import { FlightLookup } from '../../models/flight-status-result.model';
   styleUrl: './flight-search.component.scss',
 })
 export class FlightSearchComponent {
-  readonly loading = input(false);
+  readonly loading = input<boolean>(false);
   readonly search = output<FlightLookup>();
 
   readonly form = new FormGroup({

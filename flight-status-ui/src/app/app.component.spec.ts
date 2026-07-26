@@ -14,10 +14,12 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the initial empty state', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, flight-status-ui');
+
+    expect(compiled.querySelector('h1')?.textContent).toContain('Flight status tracker');
+    expect(compiled.textContent).toContain('Enter a flight number and date to begin.');
   });
 });

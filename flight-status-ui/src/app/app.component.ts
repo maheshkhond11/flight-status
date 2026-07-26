@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, inject, signal } from '@angular/core';
 import { finalize } from 'rxjs';
 import { FlightResultCardComponent } from './components/flight-result-card/flight-result-card.component';
 import { FlightSearchComponent } from './components/flight-search/flight-search.component';
@@ -16,31 +16,31 @@ export class App {
   private readonly ngZone = inject(NgZone);
   private readonly changeDetector = inject(ChangeDetectorRef);
 
-  result: FlightStatusResult | null = null;
-  errorMessage: string | null = null;
-  hasSearched = false;
-  isLoading = false;
+  readonly result = signal<FlightStatusResult | null>(null);
+  readonly errorMessage = signal<string | null>(null);
+  readonly hasSearched = signal(false);
+  readonly isLoading = signal(false);
 
   lookup(lookup: FlightLookup): void {
-    this.isLoading = true;
-    this.hasSearched = true;
-    this.errorMessage = null;
-    this.result = null;
+    this.isLoading.set(true);
+    this.hasSearched.set(true);
+    this.errorMessage.set(null);
+    this.result.set(null);
 
     this.flightStatusApi.getStatus(lookup)
       .pipe(finalize(() => {
         this.ngZone.run(() => {
-          this.isLoading = false;
+          this.isLoading.set(false);
           this.changeDetector.detectChanges();
         });
       }))
       .subscribe({
         next: (result) => {
-          this.result = result;
+          this.result.set(result);
         },
         error: (error) => {
           console.error('Flight lookup error', error);
-          this.errorMessage = 'We could not retrieve the flight status. Please try again.';
+          this.errorMessage.set('We could not retrieve the flight status. Please try again.');
         },
       });
   }

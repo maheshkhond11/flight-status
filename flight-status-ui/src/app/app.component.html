@@ -6,14 +6,14 @@
   </section>
 
   <section class="panel" aria-label="Flight status search">
-    <app-flight-search [loading]="isLoading" (search)="lookup($event)" />
+    <app-flight-search [loading]="isLoading()" (search)="lookup($event)" />
   </section>
 
-  @if (errorMessage) {
-    <p class="error" role="alert">{{ errorMessage }}</p>
-  } @else if (result) {
-    <app-flight-result-card [result]="result" />
-  } @else if (!hasSearched) {
+  @if (errorMessage()) {
+    <p class="error" role="alert">{{ errorMessage() }}</p>
+  } @else if (result()) {
+    <app-flight-result-card [result]="result()" />
+  } @else if (!hasSearched()) {
     <p class="empty-state">Enter a flight number and date to begin.</p>
   }
 </main>
