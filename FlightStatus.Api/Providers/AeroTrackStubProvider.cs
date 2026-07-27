@@ -42,6 +42,11 @@ public sealed class AeroTrackStubProvider : IFlightStatusProvider
                 terminal: "1",
                 gate: "A12",
                 delayReason: null),
+            // AeroTrack genuinely is on-time here (10-minute actual delay stays inside the
+            // 15-minute threshold, see FlightStatusNormalizer). QuickFlight still wins this
+            // scenario per spec.md section 8 because its lastUpdatedUtc (09:35Z) is later
+            // than AeroTrack's (09:10Z) -- this is a timestamp-recency win, not a status
+            // conflict, so do not "fix" this data to make AeroTrack look delayed.
             "SR200" => Create(
                 date,
                 normalizedFlightNumber,

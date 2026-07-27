@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, NgZone, inject, signal } from '@angular/core';
-import { finalize } from 'rxjs';
+import { Component, inject, signal } from '@angular/core';
+import { delay, finalize } from 'rxjs';
 import { FlightResultCardComponent } from './components/flight-result-card/flight-result-card.component';
 import { FlightSearchComponent } from './components/flight-search/flight-search.component';
 import { FlightLookup, FlightStatusResult } from './models/flight-status-result.model';
@@ -12,9 +12,16 @@ import { FlightStatusApiService } from './services/flight-status-api.service';
   styleUrl: './app.component.scss',
 })
 export class App {
+  /**
+   * The stub API resolves effectively instantly, so without this the loading
+   * spinner would flash on and off faster than it can visibly rotate. Holding
+   * every response back (success or error) by a fixed amount keeps the loading
+   * state on screen long enough to read - this is a UI/demo affordance, not a
+   * simulation of real network latency.
+   */
+  private static readonly MinimumSpinnerDurationMs = 1500;
+
   private readonly flightStatusApi = inject(FlightStatusApiService);
-  private readonly ngZone = inject(NgZone);
-  private readonly changeDetector = inject(ChangeDetectorRef);
 
   readonly result = signal<FlightStatusResult | null>(null);
   readonly errorMessage = signal<string | null>(null);
@@ -28,12 +35,10 @@ export class App {
     this.result.set(null);
 
     this.flightStatusApi.getStatus(lookup)
-      .pipe(finalize(() => {
-        this.ngZone.run(() => {
-          this.isLoading.set(false);
-          this.changeDetector.detectChanges();
-        });
-      }))
+      .pipe(
+        delay(App.MinimumSpinnerDurationMs),
+        finalize(() => this.isLoading.set(false)),
+      )
       .subscribe({
         next: (result) => {
           this.result.set(result);

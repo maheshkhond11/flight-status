@@ -10,7 +10,7 @@ Build an offline flight-status lookup feature for SkyRoute. A support agent ente
 - Frontend: Angular standalone-component application.
 - Providers are local deterministic stubs only. No real flight API, credentials, authentication, database, or persistence is included.
 - The running application must make no external network calls.
-- The UI and API are independently runnable during development. The production Docker image serves the compiled Angular files from the .NET application.
+- The UI and API are independently runnable, both in development and for the demo: the Angular dev server proxies API calls to the .NET API. No containerisation is required to run or evaluate the application.
 
 ## 3. Unified domain model
 
@@ -200,7 +200,7 @@ Angular tests must cover the result-card colour mapping, conditional AeroTrack-o
 ## 11. Delivery requirements
 
 - `spec.md` is committed before implementation files.
-- `README.md` documents prerequisites, local development, tests, Docker build/run commands, and the scenario table.
+- `README.md` documents prerequisites, local development, tests, and the scenario table.
 - `prompts.md` records only real significant AI prompts, their output/use, verification performed, and resulting engineering decisions.
 - `reflection.md` describes genuine future improvements, such as provider timeouts/retries, telemetry, richer UI tests, and accessibility review.
 - No secrets, credentials, generated dependency folders, or build artifacts are committed.

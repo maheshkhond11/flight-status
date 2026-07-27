@@ -16,6 +16,11 @@
   </div>
 
   <button type="submit" [disabled]="loading()">
-    {{ loading() ? 'Searching...' : 'Check status' }}
+    @if (loading()) {
+      <span class="spinner" aria-hidden="true"></span>
+      <span>Searching&hellip;</span>
+    } @else {
+      <span>Check status</span>
+    }
   </button>
 </form>

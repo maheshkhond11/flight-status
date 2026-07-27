@@ -12,6 +12,8 @@ export class FlightStatusApiService {
       .set('flightNumber', lookup.flightNumber)
       .set('date', lookup.date);
 
-    return this.http.get<FlightStatusResult>('https://localhost:7024/flights/status', { params });
+    // Relative URL: works with the dev proxy (ng serve -> proxy.conf.json) and in
+    // production, where this API serves the compiled Angular build from the same origin.
+    return this.http.get<FlightStatusResult>('/flights/status', { params });
   }
 }
